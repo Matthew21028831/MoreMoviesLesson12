@@ -1,7 +1,9 @@
 package sg.edu.rp.c36.id21028831.my_movies;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,14 +80,26 @@ public class MainActivity extends AppCompatActivity {
                 String genre=etGenre.getText().toString();
                 int year=Integer.parseInt(etYear.getText().toString());
 
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivity.this);
+                myBuilder.setTitle("Confirm Insert");
+                myBuilder.setMessage(String.format("You are about to insert a new movie: \n Movie Title: %s \n Movie Genre: %s \n Release Year: %d \n", title, genre, year));
+                myBuilder.setCancelable(true);
 
-                DBHelper dbh = new DBHelper(MainActivity.this);
-                long inserted_id = dbh.insertMovie(title, genre, year, rating);
+                myBuilder.setPositiveButton("insert", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DBHelper dbh = new DBHelper(MainActivity.this);
+                        long inserted_id = dbh.insertMovie(title, genre, year, rating);
 
-                if (inserted_id != -1){
-                    Toast.makeText(MainActivity.this, "Insert successful",
-                            Toast.LENGTH_SHORT).show();
-                }
+                        if (inserted_id != -1){
+                            Toast.makeText(MainActivity.this, "Insert successful",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                myBuilder.setNeutralButton("cancel", null);
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
             }
         });
 
