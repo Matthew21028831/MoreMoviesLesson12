@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/stargazeregular"
         android:gravity="center_horizontal"
+        android:paddingTop="20dp"
         android:paddingBottom="10dp"
         android:text="Movies"
         android:textColor="@color/white"
